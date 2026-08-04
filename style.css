@@ -253,13 +253,23 @@ button,
     }
 
 
-    .next {
+   .next {
 
-        padding:5px;
+    background:#111;
 
-        font-size:2.5vh;
+    border-radius:15px;
 
-    }
+    padding:15px 20px;
+
+    font-size:clamp(20px,4vh,40px);
+
+    color:#ccc;
+
+    width:95%;
+
+    margin:auto;
+
+}
 
 
     .progress-container {
