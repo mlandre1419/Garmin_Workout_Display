@@ -67,7 +67,7 @@ body {
 
     color: white;
 
-    font-size: 5vw;
+    font-size: clamp(18px, 3vh, 32px);
 
     font-weight: bold;
 
@@ -97,7 +97,7 @@ body {
 
     align-items: center;
 
-    gap: 0.5vh;
+    gap: 0.3vh;
 
 }
 
@@ -105,7 +105,7 @@ body {
 
 .step-type {
 
-    font-size: clamp(25px, 8vh, 60px);
+    font-size: clamp(28px, 6vh, 60px);
 
     font-weight: bold;
 
@@ -118,7 +118,7 @@ body {
 
 .speed {
 
-    font-size: clamp(40px, 18vh, 110px);
+    font-size: clamp(50px, 13vh, 120px);
 
     line-height: 1;
 
@@ -132,7 +132,7 @@ body {
 
 .pace {
 
-    font-size: clamp(18px, 5vh, 35px);
+    font-size: clamp(20px, 4vh, 38px);
 
     color: #ddd;
 
@@ -144,7 +144,7 @@ body {
 
 .timer {
 
-    font-size: clamp(35px, 12vh, 80px);
+    font-size: clamp(45px, 10vh, 90px);
 
     font-weight: bold;
 
@@ -241,20 +241,11 @@ body {
 button,
 .load-button {
 
-    background: #222;
+    font-size: clamp(14px, 2.5vh, 22px);
 
-    color: white;
-
-    border: 1px solid #555;
-
-    border-radius: 15px;
-
-    padding: 15px;
-
-    font-size: 4vw;
+    padding: 8px 12px;
 
 }
-
 
 
 .load-button {
@@ -361,6 +352,39 @@ body.treadmill .controls .load-button {
     .step-type {
 
         font-size: clamp(30px, 5vw, 60px);
+
+    }
+
+}
+
+    @media screen and (orientation: landscape) {
+
+    .app {
+
+        padding: 1vh 3vw;
+
+    }
+
+
+    .header {
+
+        font-size: 2.5vh;
+
+    }
+
+
+    .next {
+
+        padding: 5px;
+
+        font-size: 2.5vh;
+
+    }
+
+
+    .progress-container {
+
+        height: 20px;
 
     }
 
