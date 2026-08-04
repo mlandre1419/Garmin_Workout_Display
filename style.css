@@ -315,3 +315,31 @@ button,
     }
 
 }
+/* ============================================================
+   CORRECTION AFFICHAGE SMARTPHONE
+   Bloc "Prochaine étape" au-dessus des boutons
+   ============================================================ */
+
+.next {
+    flex-shrink: 1;
+    min-height: auto;
+    max-height: 15vh;
+    padding: 8px 15px;
+    margin: 0 auto;
+}
+
+.next > div:first-child {
+    font-size: clamp(14px, 2.5vh, 24px);
+    margin-bottom: 4px;
+}
+
+#nextStep {
+    font-size: clamp(20px, 4vh, 40px);
+    line-height: 1.1;
+}
+
+.controls {
+    flex-shrink: 0;
+    margin-top: 1vh;
+    padding-bottom: 1vh;
+}
