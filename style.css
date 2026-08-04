@@ -1,0 +1,271 @@
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    margin: 0;
+
+    background: #000;
+
+    color: white;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    height: 100vh;
+
+    overflow: hidden;
+
+}
+
+
+body {
+
+    transform: scale(0.7);
+
+    transform-origin: top left;
+
+    width: 142.8%;
+
+}
+
+
+
+.app {
+
+    height: 100dvh;
+
+    padding: 2vh 4vw;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+}
+
+
+
+.header {
+
+    color: #aaa;
+
+    font-size: 4vw;
+
+}
+
+
+
+#workoutName {
+
+    color:white;
+
+    font-size: clamp(18px,3vh,32px);
+
+    font-weight:bold;
+
+}
+
+
+
+#stepNumber {
+
+    margin-top:5px;
+
+}
+
+
+
+
+.main {
+
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:0.3vh;
+
+}
+
+
+
+.step-type {
+
+    font-size:clamp(28px,6vh,60px);
+
+    font-weight:bold;
+
+}
+
+
+
+.speed {
+
+    font-size:clamp(50px,13vh,120px);
+
+    line-height:1;
+
+    font-weight:bold;
+
+    color:#00ff88;
+
+}
+
+
+
+.pace {
+
+    font-size:clamp(20px,4vh,38px);
+
+    color:#ddd;
+
+}
+
+
+
+.timer {
+
+    font-size:clamp(45px,10vh,90px);
+
+    font-weight:bold;
+
+}
+
+
+
+.progress-container {
+
+    width:90%;
+
+    height:35px;
+
+    background:#333;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    margin-top:3vh;
+
+}
+
+
+
+#progressBar {
+
+    height:100%;
+
+    width:0%;
+
+    background:linear-gradient(
+        90deg,
+        #00ff88,
+        #00ccff
+    );
+
+}
+
+
+
+#progressText {
+
+    font-size:5vw;
+
+}
+
+
+
+.next {
+
+    background:#111;
+
+    border-radius:15px;
+
+    padding:15px 20px;
+
+    font-size:clamp(20px,4vh,40px);
+
+    color:#ccc;
+
+    width:95%;
+
+    margin:auto;
+
+}
+
+
+
+.controls {
+
+    display:flex;
+
+    justify-content:space-around;
+
+    gap:10px;
+
+    margin-top:2vh;
+
+}
+
+
+
+button,
+.load-button {
+
+    font-size:clamp(14px,2.5vh,22px);
+
+    padding:8px 12px;
+
+}
+
+
+
+.load-button input {
+
+    display:none;
+
+}
+
+
+
+@media screen and (orientation:landscape) {
+
+
+    .app {
+
+        padding:1vh 3vw;
+
+    }
+
+
+    .header {
+
+        font-size:2.5vh;
+
+    }
+
+
+    .next {
+
+        padding:5px;
+
+        font-size:2.5vh;
+
+    }
+
+
+    .progress-container {
+
+        height:20px;
+
+    }
+
+}
