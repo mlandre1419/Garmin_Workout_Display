@@ -1223,20 +1223,28 @@ document
 .getElementById("fitFileInput")
 .onchange = async function(event) {
 
-    let file = event.target.files[0];
+    const file = event.target.files[0];
 
     if (!file) return;
 
 
-    let buffer = await file.arrayBuffer();
+    const buffer = await file.arrayBuffer();
+
+
+    const bytes = new Uint8Array(buffer);
+
+
+    let texte = "";
+
+    for (let i = 0; i < Math.min(bytes.length, 200); i++) {
+
+        texte += String.fromCharCode(bytes[i]);
+
+    }
 
 
     alert(
-        "Fichier chargé : "
-        + file.name
-        + "\nTaille : "
-        + Math.round(buffer.byteLength / 1024)
-        + " Ko"
+        "Début du fichier FIT :\n\n" + texte
     );
 
 };
