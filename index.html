@@ -1227,24 +1227,47 @@ document
 
     if (!file) return;
 
-
     const buffer = await file.arrayBuffer();
-
 
     const bytes = new Uint8Array(buffer);
 
-
     let texte = "";
 
-    for (let i = 0; i < Math.min(bytes.length, 200); i++) {
+    for (let i = 0; i < bytes.length; i++) {
 
-        texte += String.fromCharCode(bytes[i]);
+        const c = bytes[i];
+
+        if (c >= 32 && c <= 126) {
+            texte += String.fromCharCode(c);
+        } else {
+            texte += " ";
+        }
 
     }
 
+    let mots = [
+        "workout",
+        "workout_step",
+        "schedule",
+        "coach",
+        "run",
+        "interval"
+    ];
+
+    let resultat = "";
+
+    mots.forEach(function(mot){
+
+        if (texte.toLowerCase().includes(mot)) {
+            resultat += "\nTrouvé : " + mot;
+        }
+
+    });
+
 
     alert(
-        "Début du fichier FIT :\n\n" + texte
+        "Analyse FIT :" +
+        resultat
     );
 
 };
