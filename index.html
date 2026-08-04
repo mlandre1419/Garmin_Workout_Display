@@ -1229,75 +1229,43 @@ document
 
     const buffer = await file.arrayBuffer();
 
-    const data = new Uint8Array(buffer);
+    const bytes = new Uint8Array(buffer);
 
 
-    let result = "";
+    let texte = "";
 
-    // Vérification de l'en-tête FIT
-
-    if (
-        data[8] === 46 &&
-        data[9] === 70 &&
-        data[10] === 73 &&
-        data[11] === 84
-    ) {
-
-        result += "Fichier FIT valide\n";
-
-    } else {
-
-        result += "Fichier non reconnu\n";
-
-    }
+    let lignes = [];
 
 
-    result +=
-        "Taille : "
-        +
-        data.length
-        +
-        " octets\n\n";
+    for (let i = 0; i < bytes.length; i++) {
 
+        let c = bytes[i];
 
-    // Recherche des octets utilisés comme identifiants FIT
+        if (c >= 32 && c <= 126) {
 
-    let compteurs = {};
+            texte += String.fromCharCode(c);
 
-    for(let i = 0; i < data.length; i++) {
+        } else {
 
-        let valeur = data[i];
+            if (texte.length > 3) {
+                lignes.push(texte);
+            }
 
-        compteurs[valeur] =
-            (compteurs[valeur] || 0) + 1;
+            texte = "";
+
+        }
 
     }
 
 
-    let principaux =
-        Object.entries(compteurs)
-        .sort((a,b)=>b[1]-a[1])
-        .slice(0,10);
+    if (texte.length > 3) {
+        lignes.push(texte);
+    }
 
 
-    result += "Octets fréquents :\n";
-
-
-    principaux.forEach(item => {
-
-        result +=
-            item[0]
-            +
-            " : "
-            +
-            item[1]
-            +
-            "\n";
-
-    });
-
-
-    alert(result);
+    alert(
+        lignes.join("\n")
+    );
 
 };
     
