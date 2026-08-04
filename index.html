@@ -1221,15 +1221,22 @@ document
 
 document
 .getElementById("fitFileInput")
-.onchange = function(event) {
+.onchange = async function(event) {
 
     let file = event.target.files[0];
 
     if (!file) return;
 
+
+    let buffer = await file.arrayBuffer();
+
+
     alert(
-        "Fichier Garmin sélectionné : "
+        "Fichier chargé : "
         + file.name
+        + "\nTaille : "
+        + Math.round(buffer.byteLength / 1024)
+        + " Ko"
     );
 
 };
