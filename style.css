@@ -214,7 +214,17 @@ body {
     margin-bottom:15px;
 
 }
+.next {
 
+    min-height:18vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+}
 
 
 #nextStep {
