@@ -504,7 +504,15 @@ onchange="loadWorkoutFile(event)"
 >
 
 </label>
+<button id="garminImportButton">
+    📂 Importer Garmin Coach
+</button>
 
+<input
+    type="file"
+    id="fitFileInput"
+    accept=".fit"
+    style="display:none">
 
 <button onclick="treadmillMode()">
 🏃
@@ -1200,5 +1208,30 @@ async function treadmillMode() {
     }
 
 }
+document
+.getElementById("garminImportButton")
+.onclick = function() {
 
+    document
+    .getElementById("fitFileInput")
+    .click();
+
+};
+
+
+document
+.getElementById("fitFileInput")
+.onchange = function(event) {
+
+    let file = event.target.files[0];
+
+    if (!file) return;
+
+    alert(
+        "Fichier Garmin sélectionné : "
+        + file.name
+    );
+
+};
+    
 </script>
