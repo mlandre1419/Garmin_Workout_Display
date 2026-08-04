@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Garmin Workout Display</title>
+<link rel="manifest" href="manifest.json">
+
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    margin: 0;
+
+    background: #000;
+
+    color: white;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    height: 100vh;
+
+    overflow: hidden;
+
+}
+
+
+
+.app {
+
+    height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    padding: 3vh 5vw;
+
+    text-align: center;
+
+}
+
+
+
+
+/* En-tête */
+
+.header {
+
+    color: #aaa;
+
+    font-size: 4vw;
+
+}
+
+
+#workoutName {
+
+    color: white;
+
+    font-size: 5vw;
+
+    font-weight: bold;
+
+}
+
+
+#stepNumber {
+
+    margin-top: 5px;
+
+}
+
+
+
+
+/* Zone centrale */
+
+.main {
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+
+
+
+.step-type {
+
+    font-size: 9vw;
+
+    font-weight: bold;
+
+    margin-bottom: 2vh;
+
+}
+
+
+
+
+.speed {
+
+    font-size: 18vw;
+
+    line-height: 1;
+
+    font-weight: bold;
+
+    color: #00ff88;
+
+}
+
+
+
+.pace {
+
+    font-size: 8vw;
+
+    color: #ddd;
+
+    margin-top: 1vh;
+
+}
+
+
+
+.timer {
+
+    font-size: 13vw;
+
+    font-weight: bold;
+
+    margin-top: 2vh;
+
+}
+
+
+
+
+/* Barre de progression */
+
+.progress-container {
+
+    width: 90%;
+
+    height: 35px;
+
+    background: #333;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    margin-top: 3vh;
+
+}
+
+
+
+#progressBar {
+
+    height: 100%;
+
+    width: 0%;
+
+    background: linear-gradient(
+        90deg,
+        #00ff88,
+        #00ccff
+    );
+
+    transition: width 1s linear;
+
+}
+
+
+
+#progressText {
+
+    font-size: 5vw;
+
+    margin-top: 10px;
+
+}
+
+
+
+
+/* Prochaine étape */
+
+.next {
+
+    background: #111;
+
+    border-radius: 15px;
+
+    padding: 15px;
+
+    font-size: 5vw;
+
+    color: #ccc;
+
+}
+
+
+
+/* Commandes */
+
+.controls {
+
+    display: flex;
+
+    justify-content: space-around;
+
+    gap: 10px;
+
+    margin-top: 2vh;
+
+}
+
+
+
+button,
+.load-button {
+
+    background: #222;
+
+    color: white;
+
+    border: 1px solid #555;
+
+    border-radius: 15px;
+
+    padding: 15px;
+
+    font-size: 4vw;
+
+}
+
+
+
+.load-button {
+
+    cursor: pointer;
+
+}
+
+
+
+.load-button input {
+
+    display: none;
+
+}
+
+
+
+/* Mode écran plus grand */
+
+@media (min-width:800px) {
+
+
+    .speed {
+
+        font-size:100px;
+
+    }
+
+
+    .timer {
+
+        font-size:80px;
+
+    }
+
+
+    .step-type {
+
+        font-size:60px;
+
+    }
+
+
+    .pace {
+
+        font-size:35px;
+
+    }
+
+
+    .next {
+
+        font-size:30px;
+
+    }
+
+
+    button,
+    .load-button {
+
+        font-size:22px;
+
+    }
+
+}
+#totalTimer {
+
+    color: #888;
+
+    margin-top: 10px;
+
+body.treadmill .controls {
+
+    opacity: 0;
+
+    transition: opacity 0.5s;
+
+}
+
+
+body.treadmill .controls:active {
+
+    opacity: 1;
+
+}
+
+
+body.treadmill .controls button,
+body.treadmill .controls .load-button {
+
+    transform: scale(0.8);
+
+}
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<div class="header">
+
+<div id="workoutName">
+Entraînement tapis
+</div>
+
+
+<div id="stepNumber">
+-
+</div>
+
+
+</div>
+
+
+
+<div class="main">
+
+
+<div id="stepType" class="step-type">
+PRÊT
+</div>
+
+
+<div id="speed" class="speed">
+-- km/h
+</div>
+
+
+<div id="pace" class="pace">
+-- min/km
+</div>
+
+
+<div id="timer" class="timer">
+00:00
+</div>
+
+<div id="totalTimer" class="pace">
+Séance restante : --:--
+</div>
+
+
+<div class="progress-container">
+
+<div id="progressBar"></div>
+
+</div>
+
+
+<div id="progressText">
+0 %
+</div>
+
+
+</div>
+
+
+
+<div class="next">
+
+
+<div>
+Ensuite :
+</div>
+
+
+<div id="nextStep">
+-
+</div>
+
+
+</div>
+
+
+
+<div class="controls">
+
+
+<label class="load-button">
+
+📂 Charger
+
+<input
+type="file"
+id="fileInput"
+accept=".json"
+onchange="loadWorkoutFile(event)"
+>
+
+</label>
+
+
+<button onclick="treadmillMode()">
+🏃
+</button>
+<button onclick="startWorkout()">
+▶
+</button>
+
+
+<button onclick="pauseWorkout()">
+⏸
+</button>
+
+<button onclick="toggleFullscreen()">
+⛶
+</button>
+
+<button onclick="resetWorkout()">
+↺
+</button>
+
+
+
+</div>
+
+
+</div>
+
+<script>
+
+
+let workout = [
+
+    {
+        type: "Échauffement",
+        duration: 15,
+        pace: "6:30"
+    },
+
+    {
+        type: "Course",
+        duration: 180,
+        pace: "5:00"
+    },
+
+    {
+        type: "Récupération",
+        duration: 120,
+        pace: "7:30"
+    },
+
+    {
+        type: "Course",
+        duration: 180,
+        pace: "5:30"
+    },
+
+    {
+        type: "Retour au calme",
+        duration: 300,
+        pace: "7:00"
+    }
+
+];
+
+
+let workoutName = "Séance tapis test";
+
+
+let currentStep = 0;
+
+let remaining = workout[0].duration;
+
+let timer = null;
+
+let running = false;
+// Gestion des alertes sonores
+
+let warningPlayed = false;
+
+
+function beep(frequency = 800, duration = 150) {
+
+    const audioContext =
+        new (window.AudioContext || window.webkitAudioContext)();
+
+
+    const oscillator =
+        audioContext.createOscillator();
+
+
+    const gain =
+        audioContext.createGain();
+
+
+    oscillator.frequency.value =
+        frequency;
+
+
+    oscillator.type = "sine";
+
+
+    oscillator.connect(gain);
+
+    gain.connect(audioContext.destination);
+
+
+    oscillator.start();
+
+
+    gain.gain.setValueAtTime(
+        0.2,
+        audioContext.currentTime
+    );
+
+
+    oscillator.stop(
+        audioContext.currentTime + duration / 1000
+    );
+
+}
+
+
+
+function flashScreen() {
+
+    document.body.style.background =
+        "#444";
+
+
+    setTimeout(() => {
+
+        document.body.style.background =
+            "#000";
+
+    }, 500);
+
+}
+
+
+
+function paceToSpeed(pace) {
+
+    let parts = pace.split(":");
+
+    let minutes = parseInt(parts[0]);
+
+    let seconds = parseInt(parts[1]);
+
+
+    let totalSeconds =
+        minutes * 60 + seconds;
+
+
+    let speed =
+        3600 / totalSeconds;
+
+
+    return speed.toFixed(1);
+
+}
+
+
+
+
+function formatTime(seconds) {
+
+    let minutes =
+        Math.floor(seconds / 60);
+
+
+    let sec =
+        seconds % 60;
+
+
+    return (
+        String(minutes).padStart(2,"0")
+        +
+        ":"
+        +
+        String(sec).padStart(2,"0")
+    );
+
+}
+function getTotalRemainingTime() {
+
+    let total = remaining;
+
+
+    for(
+        let i = currentStep + 1;
+        i < workout.length;
+        i++
+    ) {
+
+        total += workout[i].duration;
+
+    }
+
+
+    return total;
+
+}
+
+
+
+function displayWorkout() {
+
+
+    let step = workout[currentStep];
+
+
+    if(!step)
+        return;
+
+
+
+    document.getElementById("workoutName")
+        .textContent = workoutName;
+
+
+
+    document.getElementById("stepNumber")
+        .textContent =
+        "Étape "
+        +
+        (currentStep + 1)
+        +
+        " / "
+        +
+        workout.length;
+
+
+
+
+    let typeElement =
+        document.getElementById("stepType");
+
+
+    typeElement.textContent =
+        step.type;
+
+
+
+    // Couleurs selon le type
+
+    if(step.type.toLowerCase().includes("récup")) {
+
+        typeElement.style.color = "#3399ff";
+
+    }
+
+    else if(step.type.toLowerCase().includes("échauff")) {
+
+        typeElement.style.color = "#ffd633";
+
+    }
+
+    else if(step.type.toLowerCase().includes("retour")) {
+
+        typeElement.style.color = "#66ff66";
+
+    }
+
+    else {
+
+        typeElement.style.color = "#ff4444";
+
+    }
+
+
+
+
+    document.getElementById("speed")
+        .textContent =
+        paceToSpeed(step.pace)
+        +
+        " km/h";
+
+
+
+    document.getElementById("pace")
+        .textContent =
+        step.pace.replace(":","'")
+        +
+        '" /km';
+
+
+
+
+    document.getElementById("timer")
+        .textContent =
+        formatTime(remaining);
+document.getElementById("totalTimer")
+.textContent =
+"Séance restante : "
++
+formatTime(getTotalRemainingTime());
+
+
+
+    let next =
+        workout[currentStep + 1];
+
+
+    if(next) {
+
+        document.getElementById("nextStep")
+        .textContent =
+            next.type
+            +
+            " - "
+            +
+            paceToSpeed(next.pace)
+            +
+            " km/h";
+
+    }
+
+    else {
+
+        document.getElementById("nextStep")
+        .textContent =
+        "Fin de séance";
+
+    }
+
+
+
+
+    let progress =
+        100 -
+        (
+            remaining /
+            step.duration
+            *
+            100
+        );
+
+
+    document.getElementById("progressBar")
+        .style.width =
+        progress + "%";
+
+
+    document.getElementById("progressText")
+        .textContent =
+        Math.round(progress)
+        +
+        " %";
+
+
+}
+
+
+
+
+
+function tick() {
+
+
+    if(!running)
+        return;
+
+
+
+    remaining--;
+
+
+    // Alerte 10 secondes avant la fin
+
+    if(remaining === 10 && !warningPlayed) {
+
+        beep(1000,200);
+
+        warningPlayed = true;
+
+    }
+
+
+
+    if(remaining <= 0) {
+
+
+    beep(1200,250);
+
+    setTimeout(() => {
+        beep(1200,250);
+    }, 300);
+
+
+    flashScreen();
+
+
+    warningPlayed = false;
+
+
+    currentStep++;
+
+
+        if(currentStep >= workout.length) {
+
+
+            finishWorkout();
+
+            return;
+
+        }
+
+
+
+        remaining =
+            workout[currentStep].duration;
+
+    }
+
+
+
+    displayWorkout();
+
+}
+
+
+
+
+
+function startWorkout() {
+
+
+    if(running)
+        return;
+
+
+    running = true;
+
+
+    timer =
+        setInterval(
+            tick,
+            1000
+        );
+
+}
+
+
+
+
+function pauseWorkout() {
+
+
+    running = false;
+
+
+    clearInterval(timer);
+
+}
+
+
+
+
+function resetWorkout() {
+
+
+    pauseWorkout();
+
+
+    currentStep = 0;
+warningPlayed = false;
+
+
+    remaining =
+        workout[0].duration;
+
+
+    displayWorkout();
+
+}
+
+
+
+
+function finishWorkout() {
+
+
+    pauseWorkout();
+
+
+    document.getElementById("stepType")
+        .textContent =
+        "TERMINÉ";
+
+
+    document.getElementById("speed")
+        .textContent =
+        "";
+
+
+    document.getElementById("pace")
+        .textContent =
+        "";
+
+
+    document.getElementById("timer")
+        .textContent =
+        "Bravo !";
+
+
+    document.getElementById("progressBar")
+        .style.width =
+        "100%";
+
+}
+
+
+
+
+function loadWorkoutFile(event) {
+
+
+    let file =
+        event.target.files[0];
+
+
+    if(!file)
+        return;
+
+
+
+    let reader =
+        new FileReader();
+
+
+
+    reader.onload = function(e) {
+
+
+        let data =
+            JSON.parse(e.target.result);
+
+
+
+        workout =
+            data.steps;
+
+
+
+        workoutName =
+            data.name;
+
+
+
+        currentStep = 0;
+
+
+        remaining =
+            workout[0].duration;
+
+
+
+        displayWorkout();
+
+
+    };
+
+
+
+    reader.readAsText(file);
+
+}
+
+
+
+
+
+displayWorkout();
+
+function toggleFullscreen() {
+
+    let elem = document.documentElement;
+
+
+    if (!document.fullscreenElement) {
+
+        if (elem.requestFullscreen) {
+
+            elem.requestFullscreen();
+
+        }
+
+        else if (elem.webkitRequestFullscreen) {
+
+            elem.webkitRequestFullscreen();
+
+        }
+
+    }
+
+    else {
+
+        if (document.exitFullscreen) {
+
+            document.exitFullscreen();
+
+        }
+
+        else if (document.webkitExitFullscreen) {
+
+            document.webkitExitFullscreen();
+
+        }
+
+    }
+
+}
+let treadmillModeActive = false;
+
+
+async function treadmillMode() {
+
+
+    treadmillModeActive =
+        !treadmillModeActive;
+
+
+
+    if(treadmillModeActive) {
+
+
+        document.body.classList.add("treadmill");
+
+
+        // Passage plein écran
+
+        if(!document.fullscreenElement) {
+
+            let elem =
+                document.documentElement;
+
+
+            if(elem.requestFullscreen) {
+
+                await elem.requestFullscreen();
+
+            }
+
+        }
+
+
+
+        // Demande écran toujours actif
+
+        if("wakeLock" in navigator) {
+
+
+            try {
+
+                window.wakeLock =
+                    await navigator.wakeLock.request(
+                        "screen"
+                    );
+
+
+            }
+
+            catch(e) {
+
+    alert(
+        "Maintien écran non disponible sur ce navigateur."
+    );
+
+}
+
+        }
+
+
+    }
+
+    else {
+
+
+        document.body.classList.remove("treadmill");
+
+
+        if(window.wakeLock) {
+
+            window.wakeLock.release();
+
+            window.wakeLock = null;
+
+        }
+
+
+    }
+
+}
+
+</script>

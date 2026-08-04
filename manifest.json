@@ -1,0 +1,11 @@
+{
+  "name": "Garmin Workout Display",
+  "short_name": "Workout Display",
+  "description": "Affichage des entraînements Garmin pour tapis de course",
+  "start_url": "index.html",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "lang": "fr"
+}
