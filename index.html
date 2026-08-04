@@ -38,7 +38,9 @@ body {
 
 .app {
 
-    height: 100vh;
+    height: 100dvh;
+
+    padding: 2vh 4vw;
 
     display: flex;
 
@@ -46,12 +48,7 @@ body {
 
     justify-content: space-between;
 
-    padding: 3vh 5vw;
-
-    text-align: center;
-
 }
-
 
 
 
@@ -106,7 +103,7 @@ body {
 
 .step-type {
 
-    font-size: 9vw;
+    font-size: clamp(35px, 7vw, 70px);
 
     font-weight: bold;
 
@@ -119,7 +116,7 @@ body {
 
 .speed {
 
-    font-size: 18vw;
+    font-size: clamp(50px, 12vw, 120px);
 
     line-height: 1;
 
@@ -133,7 +130,7 @@ body {
 
 .pace {
 
-    font-size: 8vw;
+    font-size: clamp(24px, 4vw, 45px);
 
     color: #ddd;
 
@@ -145,7 +142,7 @@ body {
 
 .timer {
 
-    font-size: 13vw;
+    font-size: clamp(45px, 9vw, 90px);
 
     font-weight: bold;
 
