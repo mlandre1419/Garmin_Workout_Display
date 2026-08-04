@@ -2,439 +2,201 @@
     box-sizing: border-box;
 }
 
-
+html,
 body {
-
     margin: 0;
-
-    background: #000;
-
-    color: white;
-
-    font-family: Arial, Helvetica, sans-serif;
-
-    height: 100vh;
-
+    padding: 0;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
-
 }
-
 
 body {
-
-    transform: scale(0.7);
-
-    transform-origin: top left;
-
-    width: 142.8%;
-
+    font-family: Arial, sans-serif;
+    background: #000;
+    color: #fff;
 }
-
-
 
 .app {
-
+    width: 100%;
     height: 100dvh;
 
-    padding: 2vh 4vw;
-
     display: flex;
-
     flex-direction: column;
 
-    justify-content: space-between;
-
+    padding: 10px 20px;
 }
 
-
+/* ----------------------------------------------------------
+   HEADER
+---------------------------------------------------------- */
 
 .header {
-
-    color: #aaa;
-
-    font-size: 4vw;
-
+    flex: 0 0 auto;
+    text-align: center;
 }
 
-
-
-#workoutName {
-
-    color:white;
-
-    font-size: clamp(18px,3vh,32px);
-
-    font-weight:bold;
-
+.header h1 {
+    margin: 0;
+    font-size: clamp(18px, 4vh, 32px);
 }
 
-
-
-#stepNumber {
-
-    margin-top:5px;
-
-}
-
-
-
+/* ----------------------------------------------------------
+   ZONE PRINCIPALE
+---------------------------------------------------------- */
 
 .main {
+    flex: 1 1 auto;
+    min-height: 0;
 
-    flex:1;
+    display: flex;
+    flex-direction: column;
 
-    display:flex;
+    justify-content: center;
+    align-items: center;
 
-    flex-direction:column;
+    text-align: center;
 
-    justify-content:center;
-
-    align-items:center;
-
-    gap:0.3vh;
-
+    gap: 4px;
 }
 
-
-
-.step-type {
-
-    font-size:clamp(28px,6vh,60px);
-
-    font-weight:bold;
-
+#stepNumber {
+    font-size: clamp(14px, 3vh, 24px);
 }
 
-
-
-.speed {
-
-    font-size:clamp(50px,13vh,120px);
-
-    line-height:1;
-
-    font-weight:bold;
-
-    color:#00ff88;
-
+#stepType {
+    font-size: clamp(24px, 6vh, 50px);
+    font-weight: bold;
 }
 
-
-
-.pace {
-
-    font-size:clamp(20px,4vh,38px);
-
-    color:#ddd;
-
+#speed {
+    font-size: clamp(35px, 10vh, 90px);
+    font-weight: bold;
 }
 
-
-
-.timer {
-
-    font-size:clamp(45px,10vh,90px);
-
-    font-weight:bold;
-
+#pace {
+    font-size: clamp(16px, 3vh, 28px);
 }
 
+#timer {
+    font-size: clamp(40px, 10vh, 90px);
+    font-weight: bold;
+}
 
+#totalTimer {
+    font-size: clamp(14px, 3vh, 24px);
+}
+
+/* ----------------------------------------------------------
+   PROGRESSION
+---------------------------------------------------------- */
 
 .progress-container {
+    width: 80%;
+    height: 12px;
 
-    width:90%;
+    margin: 5px auto;
 
-    height:35px;
+    background: #333;
+    border-radius: 10px;
 
-    background:#333;
-
-    border-radius:20px;
-
-    overflow:hidden;
-
-    margin-top:3vh;
-
+    overflow: hidden;
 }
-
-
 
 #progressBar {
-
-    height:100%;
-
-    width:0%;
-
-    background:linear-gradient(
-        90deg,
-        #00ff88,
-        #00ccff
-    );
-
+    width: 0%;
+    height: 100%;
+    background: #fff;
 }
-
-
 
 #progressText {
-
-    font-size:5vw;
-
+    font-size: clamp(12px, 2.5vh, 20px);
 }
 
-
+/* ----------------------------------------------------------
+   PROCHAINE ÉTAPE
+---------------------------------------------------------- */
 
 .next {
+    flex: 0 0 auto;
 
-    background:#111;
+    width: 100%;
 
-    border-radius:15px;
+    text-align: center;
 
-    padding:20px 25px;
+    padding: 4px 10px;
+    margin: 0;
 
-    width:95%;
+    max-height: 12vh;
 
-    margin:auto;
-
-    text-align:center;
-
-    color:#ccc;
-
+    overflow: hidden;
 }
-
-
 
 .next > div:first-child {
-
-    font-size:8vw;
-
-    font-weight:bold;
-
-    color:#00ccff;
-
-    margin-bottom:15px;
-
+    font-size: clamp(12px, 2vh, 18px);
+    margin-bottom: 2px;
 }
-.next {
-
-    min-height:18vh;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-}
-
 
 #nextStep {
+    font-size: clamp(18px, 3.5vh, 32px);
 
-    font-size:10vw;
+    line-height: 1.1;
 
-    font-weight:bold;
-
-    color:white;
-
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-
+/* ----------------------------------------------------------
+   BOUTONS
+---------------------------------------------------------- */
 
 .controls {
+    flex: 0 0 auto;
 
-    display:flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    justify-content:space-around;
+    gap: 6px;
 
-    gap:10px;
-
-    margin-top:2vh;
-
+    padding: 5px 0;
 }
-
-
 
 button,
 .load-button {
+    font-size: clamp(12px, 2.5vh, 20px);
 
-    font-size:clamp(14px,2.5vh,22px);
+    padding: 7px 10px;
 
-    padding:8px 12px;
+    border: 1px solid #fff;
+    border-radius: 8px;
 
+    background: #222;
+    color: #fff;
+
+    white-space: nowrap;
 }
 
+/* ----------------------------------------------------------
+   PAYSAGE
+---------------------------------------------------------- */
 
-
-.load-button input {
-
-    display:none;
-
-}
-
-
-
-@media screen and (orientation:landscape) {
-
+@media (orientation: landscape) {
 
     .app {
-
-        padding:1vh 3vw;
-
-    }
-
-
-    .header {
-
-        font-size:2.5vh;
-
-    }
-
-
-   .next {
-
-    background:#111;
-
-    border-radius:15px;
-
-    padding:15px 20px;
-
-    font-size:clamp(20px,4vh,40px);
-
-    color:#ccc;
-
-    width:95%;
-
-    margin:auto;
-
-}
-
-
-    .progress-container {
-
-        height:20px;
-
-    }
-
-}
-/* ============================================================
-   CORRECTION AFFICHAGE SMARTPHONE
-   Bloc "Prochaine étape" au-dessus des boutons
-   ============================================================ */
-
-.next {
-    flex-shrink: 1;
-    min-height: auto;
-    max-height: 15vh;
-    padding: 8px 15px;
-    margin: 0 auto;
-}
-
-.next > div:first-child {
-    font-size: clamp(14px, 2.5vh, 24px);
-    margin-bottom: 4px;
-}
-
-#nextStep {
-    font-size: clamp(20px, 4vh, 40px);
-    line-height: 1.1;
-}
-
-.controls {
-    flex-shrink: 0;
-    margin-top: 1vh;
-    padding-bottom: 1vh;
-}
-/* ============================================================
-   CORRECTION AFFICHAGE PAYSAGE SMARTPHONE
-   ============================================================ */
-
-@media screen and (orientation: landscape) {
-
-    .app {
-        height: 100dvh;
-        padding: 1vh 3vw;
-        gap: 0;
-    }
-
-    .header {
-        flex: 0 0 auto;
+        padding: 5px 20px;
     }
 
     .main {
-        flex: 1 1 auto;
-        min-height: 0;
-        justify-content: center;
-        gap: 0;
+        gap: 2px;
     }
 
-    .step-type {
-        font-size: clamp(22px, 5vh, 45px);
-    }
-
-    .speed {
-        font-size: clamp(40px, 10vh, 90px);
-    }
-
-    .pace {
-        font-size: clamp(16px, 3vh, 28px);
-    }
-
-    .timer {
-        font-size: clamp(35px, 8vh, 70px);
-    }
-
-    .progress-container {
-        margin-top: 1vh;
-        height: 14px;
-    }
-
-    #progressText {
-        font-size: clamp(14px, 2.5vh, 22px);
-    }
-
-    /* PROCHAINE ÉTAPE */
     .next {
-        flex: 0 0 auto;
-        min-height: 0;
-        height: auto;
-        max-height: 13vh;
-
-        padding: 5px 15px;
-        margin: 0 auto;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        overflow: hidden;
+        max-height: 11vh;
     }
 
-    .next > div:first-child {
-        font-size: clamp(12px, 2vh, 18px);
-        margin-bottom: 2px;
-    }
-
-    #nextStep {
-        font-size: clamp(18px, 3.5vh, 32px);
-        line-height: 1.1;
-        white-space: nowrap;
-    }
-
-    /* BOUTONS */
     .controls {
-        flex: 0 0 auto;
-
-        margin-top: 1vh;
-        padding-bottom: 0;
-
-        height: auto;
-
-        display: flex;
-        align-items: center;
-    }
-
-    button,
-    .load-button {
-        font-size: clamp(12px, 2.2vh, 20px);
-        padding: 6px 10px;
+        padding-bottom: 3px;
     }
 }
