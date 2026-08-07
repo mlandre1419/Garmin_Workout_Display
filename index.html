@@ -9,9 +9,11 @@
 
 <title>Garmin Workout Display</title>
 
+<link rel="stylesheet" href="style.css">
+
 <link rel="manifest" href="manifest.json">
 
-<link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#000000">
 
 </head>
 
@@ -19,151 +21,171 @@
 <body>
 
 
-<div class="app">
+<div class="header">
+
+    <div id="workoutName">
+        Entraînement tapis
+    </div>
 
 
-    <div class="header">
+    <div id="stepNumber">
+        -
+    </div>
 
-        <div id="workoutName">
-            Entraînement tapis
-        </div>
+</div>
 
-        <div id="stepNumber">
-            -
-        </div>
+
+
+
+<div class="main">
+
+
+    <div id="stepType" class="step-type">
+        PRÊT
+    </div>
+
+
+    <div id="speed" class="speed">
+        -- km/h
+    </div>
+
+
+    <div id="pace" class="pace">
+        -- min/km
+    </div>
+
+
+    <div id="timer" class="timer">
+        00:00
+    </div>
+
+
+    <div id="totalTimer" class="pace">
+        Séance restante : --:--
+    </div>
+
+
+    <div class="progress-container">
+
+        <div id="progressBar"></div>
 
     </div>
 
 
-
-    <div class="main">
-
-
-        <div id="stepType" class="step-type">
-            PRÊT
-        </div>
-
-
-        <div id="speed" class="speed">
-            -- km/h
-        </div>
-
-
-        <div id="pace" class="pace">
-            -- min/km
-        </div>
-
-
-        <div id="timer" class="timer">
-            00:00
-        </div>
-
-
-        <div id="totalTimer" class="pace">
-            Séance restante : --:--
-        </div>
-
-
-
-        <div class="progress-container">
-
-            <div id="progressBar"></div>
-
-        </div>
-
-
-        <div id="progressText">
-            0 %
-        </div>
-
-
+    <div id="progressText">
+        0 %
     </div>
-
-
-
-
-    <div class="next">
-
-
-        <div>
-            PROCHAINE ÉTAPE
-        </div>
-
-
-        <div id="nextStep">
-            -
-        </div>
-
-
-    </div>
-
-
-
-
-
-    <div class="controls">
-
-
-        <label class="load-button">
-
-            📂 Charger
-
-            <input
-                type="file"
-                id="fileInput"
-                accept=".json"
-            >
-
-        </label>
-
-
-
-        <button id="garminImportButton">
-    📂 Garmin Coach
-</button>
-
-<input
-    type="file"
-    id="fitFileInput"
-    accept=".fit"
-    style="display:none"
->
-
-
-
-        <button id="treadmillButton">
-            🏃
-        </button>
-
-
-        <button id="startButton">
-            ▶
-        </button>
-
-
-        <button id="pauseButton">
-            ⏸
-        </button>
-
-
-        <button id="fullscreenButton">
-            ⛶
-        </button>
-
-
-        <button id="resetButton">
-            ↺
-        </button>
-
-
-    </div>
-
 
 
 </div>
 
+
+
+
+
+<div class="next">
+
+
+    <div>
+        PROCHAINE ÉTAPE
+    </div>
+
+
+    <div id="nextStep">
+        -
+    </div>
+
+
+</div>
+
+
+
+
+
+<div class="controls">
+
+
+    <label class="load-button">
+
+        📂 Charger
+
+        <input
+            type="file"
+            id="fileInput"
+            accept=".json"
+        >
+
+    </label>
+
+
+
+
+    <button id="garminImportButton">
+
+        📂 Garmin Coach
+
+    </button>
+
+
+    <input
+        type="file"
+        id="fitFileInput"
+        accept=".fit"
+        style="display:none"
+    >
+
+
+
+
+    <button id="treadmillButton">
+        🏃
+    </button>
+
+
+    <button id="startButton">
+        ▶
+    </button>
+
+
+    <button id="pauseButton">
+        ⏸
+    </button>
+
+
+    <button id="fullscreenButton">
+        ⛶
+    </button>
+
+
+    <button id="resetButton">
+        ↺
+    </button>
+
+
+</div>
+
+
+
+
+
 <script src="fitdecode.js"></script>
+
 <script src="app.js"></script>
+
+
+
+<script>
+
+if ("serviceWorker" in navigator) {
+
+    navigator.serviceWorker.register(
+        "service-worker.js"
+    );
+
+}
+
+</script>
+
 
 </body>
 
