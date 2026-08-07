@@ -658,38 +658,57 @@ garminImportButton.addEventListener(
 
 
 // ------------------------------------------------------------
-// IMPORT FIT
+// IMPORT FIT GARMIN COACH
 // ------------------------------------------------------------
 
 fitFileInput.addEventListener(
-    "change",
-    async (event) => {
-
-        const file =
-            event.target.files[0];
+"change",
+async (event) => {
 
 
-        if (!file) {
-            return;
-        }
+    const file =
+        event.target.files[0];
 
 
-        /*
-         * Pour l'instant, nous ne décodons pas encore
-         * le fichier FIT.
-         *
-         * Cette partie sera développée ensuite.
-         */
+    if (!file) {
+        return;
+    }
+
+
+    try {
+
+
+        const workout =
+            await decodeGarminFIT(file);
+
+
+        loadWorkout(workout);
+
 
         alert(
-            "Le fichier FIT a été sélectionné.\n\n" +
-            "Le décodage Garmin FIT sera ajouté " +
-            "dans la prochaine étape du projet."
+            "Séance Garmin importée :\n\n" +
+            workout.name
         );
 
 
-        fitFileInput.value = "";
+    } catch(error) {
+
+
+        console.error(error);
+
+
+        alert(
+            "Erreur import Garmin FIT :\n\n" +
+            error.message
+        );
+
+
     }
+
+
+    fitFileInput.value = "";
+
+}
 );
 
 
