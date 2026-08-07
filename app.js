@@ -658,7 +658,7 @@ garminImportButton.addEventListener(
 
 
 // ------------------------------------------------------------
-// IMPORT FIT GARMIN COACH
+// DIAGNOSTIC FIT GARMIN
 // ------------------------------------------------------------
 
 fitFileInput.addEventListener(
@@ -678,38 +678,146 @@ async (event) => {
     try {
 
 
-        const workout =
-            await decodeGarminFIT(file);
+        const buffer =
+            await file.arrayBuffer();
 
 
-        loadWorkout(workout);
+        const bytes =
+            new Uint8Array(buffer);
+
+
+
+        let report = "";
+
+        report += "GARMIN FIT DIAGNOSTIC\n";
+        report += "=====================\n\n";
+
+        report +=
+            "Fichier : "
+            + file.name
+            + "\n";
+
+
+        report +=
+            "Taille : "
+            + bytes.length
+            + " octets\n\n";
+
+
+
+        report +=
+            "Signature :\n";
+
+
+        report +=
+            Array.from(
+                bytes.slice(0,20)
+            )
+            .join(" ")
+            + "\n\n";
+
+
+
+        report +=
+            "Recherche texte :\n";
+
+
+
+        let text = "";
+
+        for(
+            let i = 0;
+            i < bytes.length;
+            i++
+        ){
+
+            const c =
+                bytes[i];
+
+
+            if(
+                c >= 32 &&
+                c <= 126
+            ){
+
+                text +=
+                    String.fromCharCode(c);
+
+            }
+            else {
+
+                text += " ";
+
+            }
+
+        }
+
+
+
+        report +=
+            text
+            .replace(/\s+/g," ")
+            .substring(0,2000);
+
+
+
+        const blob =
+            new Blob(
+                [report],
+                {
+                    type:"text/plain"
+                }
+            );
+
+
+
+        const url =
+            URL.createObjectURL(blob);
+
+
+
+        const a =
+            document.createElement("a");
+
+
+        a.href = url;
+
+
+        a.download =
+            "garmin_fit_debug.txt";
+
+
+        a.click();
+
+
+
+        URL.revokeObjectURL(url);
+
 
 
         alert(
-            "Séance Garmin importée :\n\n" +
-            workout.name
+            "Diagnostic créé :\n" +
+            "garmin_fit_debug.txt"
         );
 
 
-    } catch(error) {
 
+    }
+    catch(error){
 
         console.error(error);
 
-
         alert(
-            "Erreur import Garmin FIT :\n\n" +
-            error.message
+            "Erreur lecture FIT :\n"
+            + error.message
         );
-
 
     }
 
 
     fitFileInput.value = "";
 
-}
-);
+});
 
 
 // ------------------------------------------------------------
